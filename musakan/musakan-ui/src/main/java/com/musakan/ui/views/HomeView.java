@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
+@Component
 @Route("")
 public class HomeView extends VerticalLayout {
 
@@ -34,7 +34,7 @@ public class HomeView extends VerticalLayout {
 
                 List<Customer> all = customerService.findAll();
                 for (Customer customer : all) {
-                    add(new Label(customer.getName()));
+                    add(new Button(customer.getCustomerName()));
                 }
 
 
