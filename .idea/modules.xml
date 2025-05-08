@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/VaadinSpringBoot.iml" filepath="$PROJECT_DIR$/.idea/VaadinSpringBoot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/musakan/musakan-core/musakan-core.iml" filepath="$PROJECT_DIR$/musakan/musakan-core/musakan-core.iml" />
     </modules>
   </component>
 </project>

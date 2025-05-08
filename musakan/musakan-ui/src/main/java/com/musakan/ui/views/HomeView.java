@@ -1,22 +1,27 @@
 package com.musakan.ui.views;
 
-import com.musakan.core.business.abstracts.CustomerService;
-import com.musakan.core.business.concretes.CustomerManager;
-import com.musakan.core.dataAccess.concretes.HibernateCustomerDao;
-import com.musakan.core.entities.concretes.Customer;
+
+import com.musakan.core.entities.Customer;
+import com.musakan.core.service.CustomerService;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Layout;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+
+import java.util.List;
+
 
 @Route("")
 public class HomeView extends VerticalLayout {
 
+
+    @Autowired
+    private CustomerService customerService;
 
     public HomeView() {
 
@@ -26,8 +31,13 @@ public class HomeView extends VerticalLayout {
         button.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
             @Override
             public void onComponentEvent(ClickEvent<Button> buttonClickEvent) {
-                CustomerService customerService = new CustomerManager(new HibernateCustomerDao());
-                customerService.add(new Customer("Musab"));
+
+                List<Customer> all = customerService.findAll();
+                for (Customer customer : all) {
+                    add(new Label(customer.getName()));
+                }
+
+
             }
         });
         layout.add(button);
