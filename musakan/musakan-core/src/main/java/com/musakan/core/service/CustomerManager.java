@@ -3,11 +3,12 @@ package com.musakan.core.service;
 import com.musakan.core.dataAccess.CustomerRepository;
 import com.musakan.core.dataAccess.base.BaseRepository;
 import com.musakan.core.entities.Customer;
+import com.musakan.core.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerManager implements CustomerService {
+public class CustomerManager extends BaseServiceImpl<Customer> implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
@@ -17,7 +18,7 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public BaseRepository<Customer> findRepository() {
+    protected BaseRepository<Customer> getRepository() {
         return customerRepository;
     }
 }

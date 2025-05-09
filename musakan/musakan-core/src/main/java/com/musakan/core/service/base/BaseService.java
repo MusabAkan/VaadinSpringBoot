@@ -1,57 +1,31 @@
 package com.musakan.core.service.base;
 
-import com.musakan.core.dataAccess.base.BaseRepository;
 import com.musakan.core.entities.base.BaseEntity;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
 
-
 public interface BaseService<T extends BaseEntity> {
 
-    BaseRepository<T> findRepository();
+    T save(T t);
 
-    default T save(T t) {
-        return findRepository().save(t);
-    }
+    Boolean existsById(Long id);
 
-    default Boolean existsById(Long id){
-        return findRepository().existsById(id);
-    }
+    List<T> saveAll(List<T> entities);
 
-    default List<T> saveAll(List<T> entitties) {
-        return findRepository().saveAll(entitties);
-    }
+    void delete(Long id);
 
-    default void delete(Long id) {
-        findRepository().deleteById(id);
-    }
+    void deleteAll(List<T> entities);
 
-    default void deleteAll(List<T> entities) {
-        findRepository().deleteAll(entities);
-    }
+    List<T> findAll();
 
-    default List<T> findAll() {
-        return findRepository().findAll();
-    }
+    Optional<T> findById(Long id);
 
-    default Optional<T> findById(Long id) {
-        return findRepository().findById(id);
-    }
+    List<T> findAll(Sort sort);
 
-    default List<T> findAll(Sort sort) {
-        return findRepository().findAll(sort);
-    }
+    List<T> findAll(Pageable pageable);
 
-    default List<T> findAll(Pageable pageable) {
-        Page<T> all = findRepository().findAll(pageable);
-        return all != null ? all.getContent() : null;
-    }
-
-    default List<T> findAllById(List<Long> ids) {
-        return findRepository().findAllById(ids);
-    }
+    List<T> findAllById(List<Long> ids);
 }
