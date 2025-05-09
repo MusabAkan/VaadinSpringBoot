@@ -1,6 +1,5 @@
 package com.musakan.ui.views;
 
-
 import com.musakan.core.entities.Customer;
 import com.musakan.core.service.CustomerService;
 import com.vaadin.flow.component.button.Button;
@@ -12,130 +11,129 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.converter.StringToLongConverter;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Route("")
 public class HomeView extends VerticalLayout {
+
     @Autowired
     private CustomerService customerService;
 
-    public HomeView() {
-        CustomerView();
-    }
-
     private Grid<Customer> customerGrid;
+    private TextField idText;
     private TextField nameText;
     private TextField lastNameText;
-    private TextField idText;
 
-    private void CustomerView() {
-        VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.setWidthFull();
-        verticalLayout.setSpacing(true);
+    private Binder<Customer> binder;
+    private Customer selectedCustomer;
 
-        // Form
+    public HomeView() {
+        createCustomerView();
+    }
+
+    private void createCustomerView() {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setWidthFull();
+        layout.setSpacing(true);
+
+        // Form Layout
         FormLayout formLayout = new FormLayout();
         formLayout.setWidth("30%");
 
         idText = new TextField("Id");
-        idText.setEnabled(false);
-        formLayout.add(idText);
-
+        idText.setEnabled(false); // id sadece görüntülenebilir
         nameText = new TextField("Müşteri Adı");
-        formLayout.add(nameText);
-
         lastNameText = new TextField("Müşteri Soyadı");
-        formLayout.add(lastNameText);
+
+        formLayout.add(idText, nameText, lastNameText);
+
+        // Binder
+        binder = new Binder<>(Customer.class);
+
+        binder.forField(idText)
+                .withConverter(new StringToLongConverter("Geçerli bir ID giriniz"))
+                .bind(Customer::getId, Customer::setId);
+
+        binder.bind(nameText, Customer::getName, Customer::setName);
+        binder.bind(lastNameText, Customer::getLastName, Customer::setLastName);
 
         // Butonlar
-        Button saveButton = new Button("Kaydet");
+        Button saveButton = new Button("Kaydet", event -> saveCustomer());
         saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        saveButton.addClickListener(event -> {
-            String idString = idText.getValue();
-            String name = nameText.getValue();
-            String lastName = lastNameText.getValue();
 
-            if (StringUtils.isEmpty(name) || StringUtils.isEmpty(lastName)) {
-                new Notification("Boş Geçilemez", 1000, Notification.Position.MIDDLE).open();
-                return;
-            }
+        Button clearButton = new Button("Temizle", event -> clearForm());
 
-            Customer customer = new Customer();
-            if (!StringUtils.isEmpty(idString)) {
-                customer.setId(Long.parseLong(idString));
-            }
-            customer.setName(name);
-            customer.setLastName(lastName);
+        Button refreshButton = new Button("Yenile", event -> fillCustomer());
+        refreshButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-            Customer saved = customerService.save(customer);
-            if (saved != null) {
-                clearForm();
-                new Notification("Eklenmiştir", 1000, Notification.Position.MIDDLE).open();
-                fillCustomer();
-            }
-        });
-
-        Button clearButton = new Button("Temizle", e -> clearForm());
-
-        Button newButton = new Button("Yenile", e -> {
-            fillCustomer();
-        });
-        newButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, newButton, clearButton);
+        HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, refreshButton, clearButton);
         formLayout.add(buttonLayout);
 
         // Grid
         customerGrid = new Grid<>(Customer.class, false);
         customerGrid.setWidthFull();
         customerGrid.setHeight("400px");
+
         customerGrid.addColumn(Customer::getId).setHeader("ID").setSortable(true);
         customerGrid.addColumn(Customer::getName).setHeader("Ad").setSortable(true);
         customerGrid.addColumn(Customer::getLastName).setHeader("Soyad").setSortable(true);
         customerGrid.addColumn(Customer::getCreatedAt).setHeader("Oluşturma").setSortable(true);
         customerGrid.addColumn(Customer::getUpdatedAt).setHeader("Güncelleme").setSortable(true);
+
         customerGrid.addThemeVariants(GridVariant.LUMO_COMPACT);
 
         customerGrid.addItemClickListener(event -> {
-            Customer customer = event.getItem();
-            if (customer != null) {
-                idText.setValue(customer.getId().toString());
-                nameText.setValue(customer.getName());
-                lastNameText.setValue(customer.getLastName());
-                new Notification("Seçilen Müşteri: " + customer.getName(), 1000, Notification.Position.MIDDLE).open();
-            }
+            selectedCustomer = event.getItem();
+            binder.readBean(selectedCustomer);
+            Notification.show("Seçilen Müşteri: " + selectedCustomer.getName(), 1000, Notification.Position.MIDDLE);
         });
 
-        // Sil Butonu
-        Button deleteButton = new Button("Sil");
+        // Silme Butonu
+        Button deleteButton = new Button("Sil", event -> deleteCustomer());
         deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        deleteButton.addClickListener(event -> {
-            String idString = idText.getValue();
-            if (StringUtils.isEmpty(idString)) {
-                new Notification("Silinecek Müşteri Seçiniz", 1000, Notification.Position.MIDDLE).open();
-                return;
-            }
-            customerService.delete(Long.parseLong(idString));
-            clearForm();
-            fillCustomer();
-        });
 
-        verticalLayout.add(formLayout, customerGrid, deleteButton);
-        add(verticalLayout);
+        layout.add(formLayout, customerGrid, deleteButton);
+        add(layout);
 
         fillCustomer();
     }
 
-    private void clearForm() {
-        idText.clear();
-        nameText.clear();
-        lastNameText.clear();
+    private void saveCustomer() {
+        if (selectedCustomer == null) {
+            selectedCustomer = new Customer();
+        }
+
+        if (binder.writeBeanIfValid(selectedCustomer)) {
+            Customer saved = customerService.save(selectedCustomer);
+            Notification.show("Müşteri kaydedildi: " + saved.getName(), 1500, Notification.Position.MIDDLE);
+            clearForm();
+            fillCustomer();
+        } else {
+            Notification.show("Form geçerli değil!", 1000, Notification.Position.MIDDLE);
+        }
     }
 
+    private void deleteCustomer() {
+        if (selectedCustomer == null || selectedCustomer.getId() == null) {
+            Notification.show("Silmek için müşteri seçiniz!", 1000, Notification.Position.MIDDLE);
+            return;
+        }
+
+        customerService.delete(selectedCustomer.getId());
+        Notification.show("Müşteri silindi", 1000, Notification.Position.MIDDLE);
+        clearForm();
+        fillCustomer();
+    }
+
+    private void clearForm() {
+        selectedCustomer = null;
+        binder.readBean(null);
+    }
 
     private void fillCustomer() {
         if (customerService != null) {
