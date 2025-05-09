@@ -1,22 +1,23 @@
 package com.musakan.core.service;
 
-import com.musakan.core.entities.Customer;
 import com.musakan.core.dataAccess.CustomerRepository;
-import jakarta.transaction.Transactional;
+import com.musakan.core.dataAccess.base.BaseRepository;
+import com.musakan.core.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@Transactional(rollbackOn = Exception.class)
 public class CustomerManager implements CustomerService {
 
+    private final CustomerRepository customerRepository;
+
     @Autowired
-    private CustomerRepository customerRepository;
+    public CustomerManager(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+    public BaseRepository<Customer> findRepository() {
+        return customerRepository;
     }
 }

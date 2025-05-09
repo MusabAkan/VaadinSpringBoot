@@ -1,11 +1,10 @@
 package com.musakan.core.service;
 
 import com.musakan.core.entities.Customer;
+import com.musakan.core.service.base.BaseService;
 
-import java.util.List;
-
-public interface CustomerService {
-    List<Customer> findAll();
+public interface CustomerService extends BaseService<Customer> {
+    // opsiyonel: özel metodlar
 }
 
 
