@@ -14,5 +14,9 @@ public class Customer extends BaseEntity {
 
     @Column(name = "name", length = 50)
     @Size(max = 50)
-    private String customerName;
+    private String name;
+
+    @Column(name = "lastName", length = 50)
+    @Size(max = 50)
+    private String lastName;
 }

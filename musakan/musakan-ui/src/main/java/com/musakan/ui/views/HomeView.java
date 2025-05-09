@@ -29,10 +29,10 @@ public class HomeView extends VerticalLayout {
             @Override
             public void onComponentEvent(ClickEvent<Button> buttonClickEvent) {
 
-                List<Customer> all = customerService.findRepository().findAll();
+                List<Customer> all = customerService.findRepository();
                 for (Customer customer : all) {
 
-                    add(new Button(customer.getCustomerName()));
+                    add(new Button(customer.getName()));
                 }
 
 
