@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "customers")
-
-@Access(AccessType.FIELD)
 public class Customer {
 
     @Id
