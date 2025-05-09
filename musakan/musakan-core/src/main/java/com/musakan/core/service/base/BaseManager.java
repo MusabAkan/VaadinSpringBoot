@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
+public abstract class BaseManager<T extends BaseEntity> implements BaseService<T> {
 
     protected abstract BaseRepository<T> getRepository();
 

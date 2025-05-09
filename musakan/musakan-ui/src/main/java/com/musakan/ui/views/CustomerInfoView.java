@@ -1,7 +1,7 @@
 package com.musakan.ui.views;
 
 import com.musakan.core.entities.Customer;
-import com.musakan.core.service.CustomerService;
+import com.musakan.core.service.customer.CustomerService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Route("")
-public class HomeView extends VerticalLayout {
+@Route("customer-info-view")
+public class CustomerInfoView extends VerticalLayout {
 
     @Autowired
     private CustomerService customerService;
@@ -32,21 +32,20 @@ public class HomeView extends VerticalLayout {
     private Binder<Customer> binder;
     private Customer selectedCustomer;
 
-    public HomeView() {
-        createCustomerView();
+    public CustomerInfoView() {
+        init();
     }
 
-    private void createCustomerView() {
+    private void init() {
         VerticalLayout layout = new VerticalLayout();
         layout.setWidthFull();
         layout.setSpacing(true);
 
-        // Form Layout
         FormLayout formLayout = new FormLayout();
         formLayout.setWidth("30%");
 
         idText = new TextField("Id");
-        idText.setEnabled(false); // id sadece görüntülenebilir
+        idText.setEnabled(false);
         nameText = new TextField("Müşteri Adı");
         lastNameText = new TextField("Müşteri Soyadı");
 
