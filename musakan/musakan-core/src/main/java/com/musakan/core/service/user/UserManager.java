@@ -13,12 +13,9 @@ import org.springframework.stereotype.Service;
 public class UserManager extends BaseManager<User> implements UserService {
     private final UserRepository userRepository;
 
-
     @Autowired
-    public UserManager(UserRepository userRepositoryr) {
+    public UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
-
-
     }
 
     @Override
@@ -29,9 +26,9 @@ public class UserManager extends BaseManager<User> implements UserService {
     @Override
     public User createUser(User user) {
         String rawPassword = PasswordHelper.generate(12);
-        String hashedPassword = PasswordHelper.encode(rawPassword);
+//        String hashedPassword = PasswordHelper.encode(rawPassword);
 
-        user.setPassword(hashedPassword);
+//        user.setPassword(hashedPassword);
         user.setRole(EnumRoleType.CUSTOMER);
 
         return userRepository.save(user);

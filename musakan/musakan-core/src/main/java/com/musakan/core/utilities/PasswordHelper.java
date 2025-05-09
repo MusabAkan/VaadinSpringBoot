@@ -1,7 +1,5 @@
 package com.musakan.core.utilities;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.security.SecureRandom;
 
 public class PasswordHelper {
@@ -13,7 +11,7 @@ public class PasswordHelper {
     private static final String ALL = UPPER + LOWER + DIGITS + SPECIAL;
 
     private static final SecureRandom random = new SecureRandom();
-    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public static String generate(int length) {
         if (length < 8) {
@@ -27,11 +25,11 @@ public class PasswordHelper {
         return sb.toString();
     }
 
-    public static String encode(String password) {
-        return passwordEncoder.encode(password);
-    }
-
-    public static boolean match(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
-    }
+//    public static String encode(String password) {
+//        return passwordEncoder.encode(password);
+//    }
+//
+//    public static boolean match(String rawPassword, String encodedPassword) {
+//        return passwordEncoder.matches(rawPassword, encodedPassword);
+//    }
 }
