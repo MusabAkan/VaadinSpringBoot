@@ -1,9 +1,9 @@
-package com.musakan.core.service;
+package com.musakan.core.services;
 
-import com.musakan.core.dataAccess.CityRepository;
-import com.musakan.core.dataAccess.base.BaseRepository;
+import com.musakan.core.repositories.CityRepository;
+import com.musakan.core.repositories.base.BaseRepository;
 import com.musakan.core.entities.City;
-import com.musakan.core.service.base.BaseManager;
+import com.musakan.core.services.base.BaseManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

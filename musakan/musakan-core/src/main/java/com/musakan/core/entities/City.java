@@ -15,7 +15,7 @@ public class City extends BaseEntity {
     @Size(max = 50)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "countryId", nullable = false)
     private Country country;
 }

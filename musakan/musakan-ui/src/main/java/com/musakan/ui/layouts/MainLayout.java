@@ -7,7 +7,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
-
 public class MainLayout extends AppLayout {
     public MainLayout() {
         Icon flagIcon = new Icon(VaadinIcon.FLAG_CHECKERED);

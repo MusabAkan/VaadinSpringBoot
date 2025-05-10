@@ -1,4 +1,4 @@
-package com.musakan.core.dataAccess.base;
+package com.musakan.core.repositories.base;
 
 import com.musakan.core.entities.base.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

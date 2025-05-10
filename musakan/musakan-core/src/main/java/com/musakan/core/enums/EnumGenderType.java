@@ -13,6 +13,6 @@ public enum EnumGenderType {
 
     @Override
     public String toString() {
-        return gender != null ? gender : null;
+        return gender != null ? gender : "";
     }
 }

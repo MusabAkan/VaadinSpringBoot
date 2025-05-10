@@ -1,8 +1,9 @@
 package com.musakan.ui.views;
 
 import com.musakan.core.dtos.UserDto;
-import com.musakan.core.service.UserService;
+import com.musakan.core.services.UserService;
 import com.musakan.core.utilities.BinderHelper;
+import com.musakan.ui.utilities.NotificationHelper;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -69,7 +70,7 @@ public class LoginView extends VerticalLayout {
         UserDto userDto = new UserDto();
         if (loginBinder.writeBeanIfValid(userDto)) {
             userService.login(userDto);
-            Notification.show("Giriş başarılı", 2000, Notification.Position.MIDDLE);
+            NotificationHelper.showSuccess("Giriş başarılı");
             getUI().ifPresent(ui -> ui.navigate("empty-view"));
         }
     }
@@ -121,7 +122,7 @@ public class LoginView extends VerticalLayout {
         UserDto userDto = new UserDto();
         if (binder.writeBeanIfValid(userDto)) {
             userService.register(userDto);
-            Notification.show("Kullanıcı başarıyla oluşturuldu", 3000, Notification.Position.MIDDLE);
+            NotificationHelper.showSuccess("Kullanıcı başarıyla oluşturuldu");
             dialog.close();
         }
     }

@@ -1,14 +1,16 @@
-package com.musakan.core.service;
+package com.musakan.core.services;
 
-import com.musakan.core.dataAccess.UserRepository;
-import com.musakan.core.dataAccess.base.BaseRepository;
+import com.musakan.core.enums.EnumStatusType;
+import com.musakan.core.repositories.UserRepository;
+import com.musakan.core.repositories.base.BaseRepository;
 import com.musakan.core.dtos.UserDto;
 import com.musakan.core.entities.Customer;
 import com.musakan.core.entities.User;
 import com.musakan.core.enums.EnumGenderType;
 import com.musakan.core.enums.EnumPhoneType;
 import com.musakan.core.enums.EnumRoleType;
-import com.musakan.core.service.base.BaseManager;
+import com.musakan.core.services.base.BaseManager;
+import com.musakan.core.utilities.BusinessExceptionHelper;
 import com.musakan.core.utilities.PasswordHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class UserManager extends BaseManager<User> implements UserService {
     public User register(UserDto userDto) {
         userRepository.findByEmail(userDto.getEmail())
                 .ifPresent(existingUser -> {
-                    throw new RuntimeException("Kullanıcı Zaten Mevcuttur.");
+                    new BusinessExceptionHelper("Kullanıcı Zaten Mevcuttur.");
                 });
 
         String hashedPassword = PasswordHelper.encode(userDto.getPassword());
@@ -40,6 +42,7 @@ public class UserManager extends BaseManager<User> implements UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(hashedPassword);
         user.setRole(EnumRoleType.CUSTOMER);
+        user.setStatus(EnumStatusType.ACTIVE);
 
         Customer customer = new Customer();
         customer.setName(userDto.getFirstName());
@@ -48,6 +51,7 @@ public class UserManager extends BaseManager<User> implements UserService {
         customer.setPhoneType(EnumPhoneType.GSM);
         customer.setBirthDate(userDto.getBirthDate());
         customer.setGenderType(EnumGenderType.UNKNOWN);
+        customer.setStatus(EnumStatusType.ACTIVE);
 
         user.setCustomer(customer);
 
@@ -57,12 +61,12 @@ public class UserManager extends BaseManager<User> implements UserService {
     @Override
     public User login(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail())
-                .orElseThrow(() -> new RuntimeException("Kullanıcı Mail Adresi Bulunamadı "));
+                .orElseThrow(() -> new BusinessExceptionHelper("Kullanıcı Mail Adresi Bulunamadı "));
 
-        if (PasswordHelper.match(userDto.getPassword(), user.getPassword())) {
-            return user;
-        } else {
-            throw new RuntimeException("Kullanıcı adı veya şifre hatalı");
+        if (Boolean.FALSE.equals(PasswordHelper.match(userDto.getPassword(), user.getPassword()))) {
+            new BusinessExceptionHelper("Kullanıcı adı veya şifre hatalı");
         }
+
+        return user;
     }
 }

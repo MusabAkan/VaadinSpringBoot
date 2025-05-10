@@ -7,10 +7,7 @@ import lombok.Setter;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 @Getter

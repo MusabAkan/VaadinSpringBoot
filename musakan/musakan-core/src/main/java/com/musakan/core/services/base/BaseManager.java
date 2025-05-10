@@ -1,7 +1,7 @@
-package com.musakan.core.service.base;
+package com.musakan.core.services.base;
 
 
-import com.musakan.core.dataAccess.base.BaseRepository;
+import com.musakan.core.repositories.base.BaseRepository;
 import com.musakan.core.entities.base.BaseEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

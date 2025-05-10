@@ -5,7 +5,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.component.sidenav.SideNav;
 
-
 public class SideLayout extends AppLayout {
 
     public SideLayout() {

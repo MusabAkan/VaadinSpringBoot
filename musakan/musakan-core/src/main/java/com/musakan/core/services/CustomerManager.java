@@ -1,9 +1,9 @@
-package com.musakan.core.service;
+package com.musakan.core.services;
 
-import com.musakan.core.dataAccess.CustomerRepository;
-import com.musakan.core.dataAccess.base.BaseRepository;
+import com.musakan.core.repositories.CustomerRepository;
+import com.musakan.core.repositories.base.BaseRepository;
 import com.musakan.core.entities.Customer;
-import com.musakan.core.service.base.BaseManager;
+import com.musakan.core.services.base.BaseManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

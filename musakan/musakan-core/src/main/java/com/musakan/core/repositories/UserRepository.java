@@ -1,11 +1,8 @@
-package com.musakan.core.dataAccess;
+package com.musakan.core.repositories;
 
-import com.musakan.core.dataAccess.base.BaseRepository;
-import com.musakan.core.entities.City;
+import com.musakan.core.repositories.base.BaseRepository;
 import com.musakan.core.entities.User;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends BaseRepository<User> {

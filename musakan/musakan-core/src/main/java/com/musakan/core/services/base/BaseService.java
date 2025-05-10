@@ -1,4 +1,4 @@
-package com.musakan.core.service.base;
+package com.musakan.core.services.base;
 
 import com.musakan.core.entities.base.BaseEntity;
 import org.springframework.data.domain.Pageable;

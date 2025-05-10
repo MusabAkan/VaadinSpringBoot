@@ -14,6 +14,6 @@ public enum EnumPhoneType {
 
     @Override
     public String toString() {
-        return type != null ? type : null;
+        return type != null ? type : "";
     }
 }

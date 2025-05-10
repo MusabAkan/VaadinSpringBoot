@@ -1,7 +1,7 @@
 package com.musakan.ui.views;
 
 import com.musakan.core.entities.Customer;
-import com.musakan.core.service.CustomerService;
+import com.musakan.core.services.CustomerService;
 import com.musakan.ui.layouts.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -15,7 +15,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToLongConverter;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

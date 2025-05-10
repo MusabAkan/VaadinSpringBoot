@@ -1,9 +1,9 @@
 package com.musakan.core.enums;
 
 public enum EnumRoleType {
-    CUSTOMER("Müşteri"),
+    SUPER_ADMIN("Süper Admin"),
     ADMIN("Admin"),
-    STAFF("Personel");
+    CUSTOMER("Müşteri");
 
     private final String roleType;
 
@@ -13,6 +13,6 @@ public enum EnumRoleType {
 
     @Override
     public String toString() {
-        return roleType != null ? roleType : null;
+        return roleType != null ? roleType : "";
     }
 }
