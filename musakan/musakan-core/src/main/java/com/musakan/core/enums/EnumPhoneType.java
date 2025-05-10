@@ -1,4 +1,4 @@
-package com.musakan.core.entities.enums;
+package com.musakan.core.enums;
 
 public enum EnumPhoneType {
     GSM("GSM"),

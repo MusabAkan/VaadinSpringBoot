@@ -1,6 +1,6 @@
 datasource:
   musakan:
-    url: jdbc:mysql://localhost:3306/northwind
+    url: jdbc:mysql://localhost:3306/VaadinSpringBootDB
     username: musab
     password: Baba123*
     driver-class-name: com.mysql.cj.jdbc.Driver

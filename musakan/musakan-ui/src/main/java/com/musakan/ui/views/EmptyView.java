@@ -6,7 +6,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "empty-view", layout = MainLayout.class)
 public class EmptyView extends VerticalLayout {
     public EmptyView() {
         setSizeFull();

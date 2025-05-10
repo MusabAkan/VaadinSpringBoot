@@ -1,10 +1,11 @@
-package com.musakan.core.service.user;
+package com.musakan.core.service;
 
+import com.musakan.core.dtos.UserDto;
 import com.musakan.core.entities.User;
 import com.musakan.core.service.base.BaseService;
 
 public interface UserService extends BaseService<User> {
-    User createUser(User user);
+    User register(UserDto user);
 
-    User login(String email, String password);
+    User login(UserDto user);
 }

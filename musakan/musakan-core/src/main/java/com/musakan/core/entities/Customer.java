@@ -1,13 +1,15 @@
 package com.musakan.core.entities;
 
 import com.musakan.core.entities.base.BaseEntity;
-import com.musakan.core.entities.enums.EnumGenderType;
-import com.musakan.core.entities.enums.EnumPhoneType;
+import com.musakan.core.enums.EnumGenderType;
+import com.musakan.core.enums.EnumPhoneType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -29,24 +31,29 @@ public class Customer extends BaseEntity {
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    @Size(max = 30)
+    @Column(length = 30)
     private EnumPhoneType phoneType;
 
     @Enumerated(EnumType.STRING)
-    @Size(max = 30)
+    @Column(length = 30)
     private EnumGenderType genderType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "countryId", nullable = false)
+    @JoinColumn(name = "countryId")
     private Country country;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cityId", nullable = false)
+    @JoinColumn(name = "cityId")
     private City city;
 
     @Column(name = "birthDate")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "isActive")
     private Boolean isActive;
+
+    @Override
+    public String toString() {
+        return name + " " + lastName;
+    }
 }

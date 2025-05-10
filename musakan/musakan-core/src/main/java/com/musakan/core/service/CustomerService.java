@@ -1,4 +1,4 @@
-package com.musakan.core.service.customer;
+package com.musakan.core.service;
 
 import com.musakan.core.entities.Customer;
 import com.musakan.core.service.base.BaseService;

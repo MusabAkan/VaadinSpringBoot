@@ -7,7 +7,10 @@ import lombok.Setter;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 @Getter
@@ -24,23 +27,20 @@ public abstract class BaseEntity implements Serializable {
     private int version;
 
     @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        Date now = new Date();
-        createdAt = now;
-        updatedAt = now;
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = new Date();
+        updatedAt = LocalDateTime.now();
     }
 
     @Override
@@ -55,3 +55,19 @@ public abstract class BaseEntity implements Serializable {
         return Objects.hashCode(id);
     }
 }
+
+/* CascadeType.PERSIST: Eğer ana nesne kaydedilirse, ilişkili nesne de kaydedilir.
+
+   CascadeType.MERGE: Eğer ana nesne birleştirilirse (merge), ilişkili nesne de birleştirilir.
+
+   CascadeType.REMOVE: Eğer ana nesne silinirse, ilişkili nesne de silinir.
+
+   CascadeType.REFRESH: Eğer ana nesne yenilenirse (refresh), ilişkili nesne de yenilenir.
+
+   CascadeType.DETACH: Eğer ana nesne ayrılırsa (detach), ilişkili nesne de ayrılır.
+
+   CascadeType.ALL: genellikle ilişkili nesneler üzerinde yapılan tüm işlemlerin otomatik olarak
+   senkronize edilmesini isteyen durumlarda kullanılır.   Bu, veri tutarlılığını korumak için
+   faydalıdır ancak dikkat edilmesi gereken bir noktadır çünkü yanlışlıkla istemediğiniz işlemler
+   yapılabilir (örneğin, ana nesne silindiğinde ilişkili nesnelerin de silinmesi).
+ */

@@ -1,4 +1,4 @@
-package com.musakan.core.service.country;
+package com.musakan.core.service;
 
 import com.musakan.core.dataAccess.CountryRepository;
 import com.musakan.core.dataAccess.base.BaseRepository;

@@ -1,4 +1,4 @@
-package com.musakan.core.service.city;
+package com.musakan.core.service;
 
 import com.musakan.core.entities.City;
 import com.musakan.core.service.base.BaseService;
