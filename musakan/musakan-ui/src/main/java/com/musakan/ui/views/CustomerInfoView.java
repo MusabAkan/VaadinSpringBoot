@@ -53,7 +53,6 @@ public class CustomerInfoView extends VerticalLayout {
 
         formLayout.add(idText, nameText, lastNameText);
 
-
         binder = new Binder<>(Customer.class);
 
         binder.forField(idText)
