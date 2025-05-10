@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
@@ -40,10 +41,17 @@ public class MainLayout extends AppLayout implements RouterLayout {
             VaadinHelper.navigateTo("/not-found-view");
             VaadinHelper.navigateSetCurrent("/not-found-view");
         } else {
-            MenuItem user = userMenu.addItem("👤" + VaadinHelper.getCurrentUser().orElse(null).getCustomer());
+            MenuItem user = userMenu.addItem(new HorizontalLayout(VaadinIcon.USER.create(),
+                    new Span(VaadinHelper.getCurrentUser().orElse(null).getCustomer().toString())));
+
+            // Kullanıcı menüsü alt menüsü
             SubMenu subMenu = user.getSubMenu();
-            subMenu.addItem("Ayarlar", e -> VaadinHelper.navigateTo("/settings"));
-            subMenu.addItem("Çıkış Yap", e -> VaadinHelper.logout());
+
+            subMenu.addItem(new HorizontalLayout(VaadinIcon.COG.create(),
+                    new Span("Ayarlar")), e -> VaadinHelper.navigateTo("/settings"));
+
+            subMenu.addItem(new HorizontalLayout(VaadinIcon.SIGN_OUT.create(),
+                    new Span("Çıkış Yap")), e -> VaadinHelper.logout());
 
             // Header birleşimi
             HorizontalLayout header = new HorizontalLayout(toggleDrawerButton, titleSection, userMenu);
@@ -54,11 +62,12 @@ public class MainLayout extends AppLayout implements RouterLayout {
 
             addToNavbar(header);
 
-            //todo Burrda role ekletirilecek
-            addToDrawer(VaadinHelper.createSideNav(new Object[][]{
-                    {"Ana Sayfa", "/empty-view", VaadinIcon.HOME},
-                    {"Müşteri Hizmeti", "/customer-info-view", VaadinIcon.USER_HEART}
-            }));
+            //Burada Kullanıcın Rollerine göre menü öğeleri eklenebilir
+            addToDrawer(VaadinHelper.createSideNav(
+                    new Object[][]{
+                            {"Ana Sayfa", "/empty-view", VaadinIcon.HOME},
+                            {"Müşteri Hizmeti", "/customer-info-view", VaadinIcon.USER_HEART}}
+            ));
 
             // Drawer overlay olarak çalışsın, boşluk bırakmasın
             setPrimarySection(Section.NAVBAR);
