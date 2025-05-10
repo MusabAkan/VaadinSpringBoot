@@ -11,7 +11,10 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -36,34 +39,68 @@ public class LoginView extends VerticalLayout {
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
+        getStyle().set("background-color", "#ffffff");
 
         Binder<UserDto> loginBinder = new Binder<>(UserDto.class);
 
+        Image topImage = new Image("/images/giris.jpg", "Crown Logo");
+        topImage.setWidth("150px");
+        topImage.getStyle().set("margin-bottom", "10px");
+
+
+        H1 title = new H1("Oturum Aç");
+        title.getStyle()
+                .set("text-align", "center")
+                .set("margin-bottom", "10px")
+                .set("font-size", "28px");
+
         EmailField emailField = new EmailField("E-posta");
-        emailField.setRequired(true);
         emailField.setWidth("400px");
-        emailField.getElement().getStyle().set("font-size", "16px");
+        emailField.setRequired(true);
         BinderHelper.bindWithValidation(loginBinder, emailField, UserDto::getEmail, UserDto::setEmail, "E-posta gerekli");
 
         PasswordField passwordField = new PasswordField("Şifre");
-        passwordField.setRequired(true);
         passwordField.setWidth("400px");
-        passwordField.getElement().getStyle().set("font-size", "16px");
+        passwordField.setRequired(true);
         BinderHelper.bindWithValidation(loginBinder, passwordField, UserDto::getPassword, UserDto::setPassword, "Şifre gerekli");
 
-        Button loginButton = new Button("Giriş Yap", VaadinIcon.SIGN_IN.create());
+        Button loginButton = new Button("GİRİŞ YAP", VaadinIcon.SIGN_IN.create());
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        loginButton.addClickListener(e -> {
-            login(loginBinder);
-        });
+        loginButton.setWidth("400px");
+        loginButton.getStyle().set("font-weight", "bold");
+        loginButton.addClickListener(e -> login(loginBinder));
 
         Button registerButton = new Button("Yeni kullanıcı oluştur", VaadinIcon.USER.create());
-        registerButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        registerButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        registerButton.setWidth("400px");
         registerButton.addClickListener(e -> openShowDialogByRegister());
 
-        VerticalLayout formLayout = new VerticalLayout(emailField, passwordField, loginButton, registerButton);
+        Image googleImage = new Image("/images/google.jpg", "Google İle Giriş Yap");
+        googleImage.setWidth("50px");
+        googleImage.addClassName("hover-image");
+        googleImage.addClickListener(e -> {
+            NotificationHelper.showSuccess("Google ile giriş yapılıyor...");
+        });
+
+        Image appleImage = new Image("/images/apple.jpeg", "Apple İle Giriş Yap");
+        appleImage.setWidth("50px");
+        appleImage.addClassName("hover-image");
+        appleImage.addClickListener(e -> {
+            NotificationHelper.showSuccess("Apple ile giriş yapılıyor...");
+        });
+
+
+        HorizontalLayout imageRow = new HorizontalLayout(googleImage, appleImage);
+        imageRow.setJustifyContentMode(JustifyContentMode.CENTER);
+        imageRow.setSpacing(true);
+        imageRow.setWidth("400px");
+
+        VerticalLayout formLayout = new VerticalLayout(
+                topImage, title, emailField, passwordField, loginButton, registerButton, imageRow
+        );
         formLayout.setSpacing(true);
-        formLayout.setWidth("300px");
+        formLayout.setAlignItems(Alignment.CENTER);
+formLayout.getStyle().set("border", "1px solid #ccc").set("border-radius", "100px").set("padding", "20px").set("background-color", "#fdfdfd").setWidth("500px").setHeight("620px");
 
         add(formLayout);
     }

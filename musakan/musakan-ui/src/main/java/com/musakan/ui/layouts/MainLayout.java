@@ -1,6 +1,5 @@
 package com.musakan.ui.layouts;
 
-import com.musakan.core.entities.User;
 import com.musakan.ui.utilities.VaadinHelper;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.contextmenu.MenuItem;
@@ -15,16 +14,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import java.util.Optional;
-
 public class MainLayout extends AppLayout implements RouterLayout {
 
     public MainLayout() {
-        createHeader();
-        addToDrawer(new SideLayout());
+        init();
     }
 
-    private void createHeader() {
+    private void init() {
         // Sol taraftaki logo ve başlık
         Icon logo = new Icon(VaadinIcon.FLAG_CHECKERED);
         logo.setColor("red");
@@ -36,23 +32,27 @@ public class MainLayout extends AppLayout implements RouterLayout {
         HorizontalLayout leftSection = new HorizontalLayout(logo, title);
         leftSection.setAlignItems(Alignment.CENTER);
 
-
         MenuBar userMenu = new MenuBar();
-        Optional<User> currentUser = VaadinHelper.getCurrentUser();
 
-        MenuItem user = userMenu.addItem("👤" + currentUser.orElse(null).getCustomer());
+        if (Boolean.FALSE.equals(VaadinHelper.isUserLoggedIn())) {
+            VaadinHelper.navigateTo("/not-found-view");
+        }
+        else {
+            MenuItem user = userMenu.addItem("👤" + VaadinHelper.getCurrentUser().orElse(null).getCustomer());
 
-        SubMenu subMenu = user.getSubMenu();
-        subMenu.addItem("Ayarlar", e ->  VaadinHelper.navigateTo("/settings"));
-        subMenu.addItem("Çıkış Yap", e ->  VaadinHelper.logout());
+            SubMenu subMenu = user.getSubMenu();
+            subMenu.addItem("Ayarlar", e -> VaadinHelper.navigateTo("/settings"));
+            subMenu.addItem("Çıkış Yap", e -> VaadinHelper.logout());
 
-        // Header birleşimi
-        HorizontalLayout header = new HorizontalLayout(leftSection, userMenu);
-        header.setWidthFull();
-        header.setJustifyContentMode(JustifyContentMode.BETWEEN);
-        header.setAlignItems(Alignment.CENTER);
-        header.setPadding(true);
+            // Header birleşimi
+            HorizontalLayout header = new HorizontalLayout(leftSection, userMenu);
+            header.setWidthFull();
+            header.setJustifyContentMode(JustifyContentMode.BETWEEN);
+            header.setAlignItems(Alignment.CENTER);
+            header.setPadding(true);
 
-        addToNavbar(header);
+            addToNavbar(header);
+            addToDrawer(new SideLayout());
+        }
     }
 }

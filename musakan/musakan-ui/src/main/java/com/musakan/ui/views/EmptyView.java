@@ -9,6 +9,10 @@ import com.vaadin.flow.router.Route;
 @Route(value = "empty-view", layout = MainLayout.class)
 public class EmptyView extends VerticalLayout {
     public EmptyView() {
+        init();
+    }
+
+    private void init() {
         setSizeFull();
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
