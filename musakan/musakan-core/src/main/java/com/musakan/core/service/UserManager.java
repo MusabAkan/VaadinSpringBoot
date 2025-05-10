@@ -34,8 +34,7 @@ public class UserManager extends BaseManager<User> implements UserService {
                     throw new RuntimeException("Kullanıcı Zaten Mevcuttur.");
                 });
 
-        String generatePassword = PasswordHelper.generate(12);
-        String hashedPassword = PasswordHelper.encode(generatePassword);
+        String hashedPassword = PasswordHelper.encode(userDto.getPassword());
 
         User user = new User();
         user.setEmail(userDto.getEmail());
