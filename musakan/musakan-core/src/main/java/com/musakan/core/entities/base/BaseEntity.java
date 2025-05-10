@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * BaseEntity sınıfı, tüm varlık sınıflarının ortak özelliklerini ve davranışlarını tanımlar.
+ */
 @Getter
 @Setter
 @MappedSuperclass
@@ -52,19 +55,19 @@ public abstract class BaseEntity implements Serializable {
         return Objects.hashCode(id);
     }
 }
-
-/* CascadeType.PERSIST: Eğer ana nesne kaydedilirse, ilişkili nesne de kaydedilir.
-
-   CascadeType.MERGE: Eğer ana nesne birleştirilirse (merge), ilişkili nesne de birleştirilir.
-
-   CascadeType.REMOVE: Eğer ana nesne silinirse, ilişkili nesne de silinir.
-
-   CascadeType.REFRESH: Eğer ana nesne yenilenirse (refresh), ilişkili nesne de yenilenir.
-
-   CascadeType.DETACH: Eğer ana nesne ayrılırsa (detach), ilişkili nesne de ayrılır.
-
-   CascadeType.ALL: genellikle ilişkili nesneler üzerinde yapılan tüm işlemlerin otomatik olarak
-   senkronize edilmesini isteyen durumlarda kullanılır.   Bu, veri tutarlılığını korumak için
-   faydalıdır ancak dikkat edilmesi gereken bir noktadır çünkü yanlışlıkla istemediğiniz işlemler
-   yapılabilir (örneğin, ana nesne silindiğinde ilişkili nesnelerin de silinmesi).
+/**
+ * CascadeType.PERSIST: Eğer ana nesne kaydedilirse, ilişkili nesne de kaydedilir.
+ *
+ *    CascadeType.MERGE: Eğer ana nesne birleştirilirse (merge), ilişkili nesne de birleştirilir.
+ *
+ *    CascadeType.REMOVE: Eğer ana nesne silinirse, ilişkili nesne de silinir.
+ *
+ *    CascadeType.REFRESH: Eğer ana nesne yenilenirse (refresh), ilişkili nesne de yenilenir.
+ *
+ *    CascadeType.DETACH: Eğer ana nesne ayrılırsa (detach), ilişkili nesne de ayrılır.
+ *
+ *    CascadeType.ALL: genellikle ilişkili nesneler üzerinde yapılan tüm işlemlerin otomatik olarak
+ *    senkronize edilmesini isteyen durumlarda kullanılır.   Bu, veri tutarlılığını korumak için
+ *    faydalıdır ancak dikkat edilmesi gereken bir noktadır çünkü yanlışlıkla istemediğiniz işlemler
+ *    yapılabilir (örneğin, ana nesne silindiğinde ilişkili nesnelerin de silinmesi).
  */

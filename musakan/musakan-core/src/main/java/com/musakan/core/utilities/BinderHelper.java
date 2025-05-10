@@ -7,7 +7,9 @@ import com.vaadin.flow.data.binder.Setter;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.function.ValueProvider;
 
-
+/**
+ *  Binding ile validasyon işlemlerini gerçekleştiren yardımcı sınıf
+ */
 public class BinderHelper {
     public static <T, V> void bindWithValidation(
             Binder<T> binder,

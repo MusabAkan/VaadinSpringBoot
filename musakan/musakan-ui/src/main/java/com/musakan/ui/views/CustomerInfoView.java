@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-
 @Route(value = "customer-info-view", layout = MainLayout.class)
 public class CustomerInfoView extends VerticalLayout {
 
@@ -86,7 +85,7 @@ public class CustomerInfoView extends VerticalLayout {
         customerGrid.addColumn(Customer::getCreatedAt).setHeader("Oluşturma").setSortable(true);
         customerGrid.addColumn(Customer::getUpdatedAt).setHeader("Güncelleme").setSortable(true);
 
-        customerGrid.addThemeVariants(GridVariant.LUMO_COMPACT);
+    customerGrid.addThemeVariants(GridVariant.LUMO_COMPACT);
 
         customerGrid.addItemClickListener(event -> {
             selectedCustomer = event.getItem();

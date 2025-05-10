@@ -4,6 +4,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.security.SecureRandom;
 
+/**
+ * PasswordHelper sınıfı, şifre oluşturma, şifreleme ve eşleştirme işlemlerini gerçekleştiren yardımcı bir sınıftır.
+ * Şifrelerin güvenli bir şekilde oluşturulmasını ve saklanmasını sağlar.
+ */
 public class PasswordHelper {
 
     private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

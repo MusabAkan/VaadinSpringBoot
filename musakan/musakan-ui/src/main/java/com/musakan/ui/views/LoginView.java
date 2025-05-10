@@ -1,22 +1,24 @@
 package com.musakan.ui.views;
 
 import com.musakan.core.dtos.UserDto;
+import com.musakan.core.entities.User;
 import com.musakan.core.services.UserService;
 import com.musakan.core.utilities.BinderHelper;
 import com.musakan.ui.utilities.NotificationHelper;
+import com.musakan.ui.utilities.VaadinHelper;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "")
@@ -69,9 +71,12 @@ public class LoginView extends VerticalLayout {
     private void login(Binder<UserDto> loginBinder) {
         UserDto userDto = new UserDto();
         if (loginBinder.writeBeanIfValid(userDto)) {
-            userService.login(userDto);
+            User user = userService.login(userDto);
+
+            VaadinHelper.setCurrentUser(user);
+            VaadinHelper.navigateTo("empty-view");
+
             NotificationHelper.showSuccess("Giriş başarılı");
-            getUI().ifPresent(ui -> ui.navigate("empty-view"));
         }
     }
 

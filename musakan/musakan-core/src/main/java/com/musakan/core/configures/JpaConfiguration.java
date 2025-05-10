@@ -25,6 +25,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * Konfigürasyon sınıfı, JPA ve veri kaynağı yapılandırmalarını içerir.
+ */
 @Configuration
 @EnableJpaRepositories(basePackages = "com.musakan.core.repositories",
         entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")

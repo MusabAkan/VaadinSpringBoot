@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service için kullanılan temel Generic abastract sınıf
+ * @param <T>
+ */
 @Service
 public abstract class BaseManager<T extends BaseEntity> implements BaseService<T> {
 

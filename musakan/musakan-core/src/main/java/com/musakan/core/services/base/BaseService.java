@@ -7,6 +7,10 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service için kullanılan temel interface sınıf
+ * @param <T>
+ */
 public interface BaseService<T extends BaseEntity> {
 
     T save(T t);

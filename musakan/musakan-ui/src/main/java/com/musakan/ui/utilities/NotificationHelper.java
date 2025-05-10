@@ -3,6 +3,10 @@ package com.musakan.ui.utilities;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 
+/**
+ * NotificationHelper sınıfı, uygulama genelinde bildirimleri yönetmek için kullanılan bir yardımcı sınıftır.
+ * Farklı türlerde (hata, başarı, uyarı, bilgi) bildirimler oluşturmak için kullanılabilir.
+ */
 public class NotificationHelper {
     public static final int DEFAULT_DURATION = 3000;
 
